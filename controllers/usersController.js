@@ -14,7 +14,8 @@ exports.createUser = {
         password : SHA3(request.payload.password),
         scope : request.payload.scope,
         mail : request.payload.mail,
-        name : request.payload.name
+        name.first : request.payload.name.first,
+        name.last : request.payload.name.last
       });
       console.log("saveFunction");
       newUser.save(function (err) {
