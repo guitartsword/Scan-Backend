@@ -45,7 +45,7 @@ exports.addFriend = {
   handler: function(request,reply){ //Sends a username
     user
     .findById(request.auth.credentials._id)
-    .populate('friend')
+    .populate('friends')
     .exec(function(err, loggedIn){
       if(err) reply (err);
       user.findOne({username: request.payload.username}, function(err, friend){
@@ -54,7 +54,9 @@ exports.addFriend = {
           reply("User not found");
         }else{
           var newFriend = loggedIn.friends.find(function(hasFriend){
-            return String(hasFriend) == String(friend._id);
+            console.log("hasFriend:  "+ hasFriend._id);
+            console.log("friend._id: "+friend._id);
+            return String(hasFriend._id) === String(friend._id);
           });
           if(newFriend != undefined){
             reply("Already your friend");
@@ -70,7 +72,7 @@ exports.addFriend = {
     });
   }
 }
-exports.deleteFriends ={
+exports.deleteFriend ={
   auth: {
     mode:'required',
     strategy:'session',
@@ -79,10 +81,26 @@ exports.deleteFriends ={
   handler: function(request, reply){
     user
     .findById(request.auth.credentials._id)
-    .populate('friend')
+    .populate('friends')
     .exec(function(err, loggedIn){
-      
-    }
+      if(err) reply (err);
+      user.findOne({username: request.payload.username}, function(err, friend){
+        var toRemove = -1;
+        loggedIn.friends.find(function(friendToRemove, index){
+          if(String(friendToRemove._id) === String(friend._id)){
+            toRemove = index;
+            return true;
+          }
+        });
+        if(toRemove != -1){
+          loggedIn.friends.splice(toRemove,1);
+          loggedIn.save();
+          reply("Friend deleted correctly");
+        }else{
+          reply("Friend not found");
+        }
+      });
+    });
   }
 }
 exports.listFriends = {

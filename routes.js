@@ -11,6 +11,7 @@ exports.endpoints = [{method: 'GET', path: '/', config: {handler: function(reque
 	{method: 'GET', path: '/v1/users', config: usersController.getAllUsers},
 	{method: 'GET', path: '/v1/user/friends', config: usersController.listFriends},
 	{method: 'PUT', path: '/v1/user/addFriend', config: usersController.addFriend},
+	{method: 'PUT', path: '/v1/user/deleteFriend', config: usersController.deleteFriend},
 
 	//authController
 	{method: 'POST', path: '/v1/login', config: authController.login},
