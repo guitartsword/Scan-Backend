@@ -13,8 +13,8 @@ exports.createUser = {
         username : request.payload.username,
         password : SHA3(request.payload.password),
         scope : request.payload.scope,
-        name : request.payload.name,
-        mail : request.payload.mail
+        mail : request.payload.mail,
+        name : request.payload.name
       });
       console.log("saveFunction");
       newUser.save(function (err) {
@@ -27,6 +27,7 @@ exports.createUser = {
     });
   }
 };
+
 exports.getAllUsers = {
   handler: function(request, reply){
     console.log(user.find({}));
