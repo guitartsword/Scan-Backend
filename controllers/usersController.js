@@ -2,7 +2,7 @@ var user = require('../schemas/user');
 var SHA3 = require("crypto-js/sha3");
 var boom = require('boom');
 //buscar usuarios por nombre
-//agreagar y listar amigos
+//agreagar, eliminar y listar amigos
 //una imagen
 exports.createUser = {
   auth: {
@@ -48,16 +48,41 @@ exports.addFriend = {
     .populate('friend')
     .exec(function(err, loggedIn){
       if(err) reply (err);
-      console.log(loggedIn.friends);
       user.findOne({username: request.payload.username}, function(err, friend){
         if(err) reply (err);
-        //VALIDAR SI YA TIENE ESE AMIGO
-        //TAMBIEN VALIDAR QUE NO SE PUEDA AGREGAR A SI MISMO DE AMIGO
-        loggedIn.friends.push(friend._id);
-        loggedIn.save();
-        reply("Added Successfully");
+        if(friend == undefined){
+          reply("User not found");
+        }else{
+          var newFriend = loggedIn.friends.find(function(hasFriend){
+            return String(hasFriend) == String(friend._id);
+          });
+          if(newFriend != undefined){
+            reply("Already your friend");
+          }else if(request.auth.credentials._id == friend._id){
+            reply("Can't add yourself as friend");
+          }else{
+            loggedIn.friends.push(friend._id);
+            loggedIn.save();
+            reply("Added Successfully");
+          }
+        }
       });
     });
+  }
+}
+exports.deleteFriends ={
+  auth: {
+    mode:'required',
+    strategy:'session',
+    scope:['regular']
+  },
+  handler: function(request, reply){
+    user
+    .findById(request.auth.credentials._id)
+    .populate('friend')
+    .exec(function(err, loggedIn){
+      
+    }
   }
 }
 exports.listFriends = {
@@ -72,12 +97,6 @@ exports.listFriends = {
       reply(err);
     }
     reply(users.friends);
-  });/*
-    console.log(request.auth.credentials._id);
-    console.log(request.auth.credentials.username);
-    console.log(request.auth.credentials.friends );
-    console.log(loggedUser);
-    reply(loggedUser[0].friends);
-    */
+  });
   }
 }

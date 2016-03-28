@@ -9,8 +9,8 @@ exports.endpoints = [{method: 'GET', path: '/', config: {handler: function(reque
 	//usersController
 	{method: 'POST', path: '/v1/register', config: usersController.createUser},
 	{method: 'GET', path: '/v1/users', config: usersController.getAllUsers},
-	{method: 'GET', path: '/v1/friends', config: usersController.listFriends},
-	{method: 'PUT', path: '/v1/addFriend', config: usersController.addFriend},
+	{method: 'GET', path: '/v1/user/friends', config: usersController.listFriends},
+	{method: 'PUT', path: '/v1/user/addFriend', config: usersController.addFriend},
 
 	//authController
 	{method: 'POST', path: '/v1/login', config: authController.login},
