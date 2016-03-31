@@ -136,3 +136,16 @@ exports.getUser = {
     });
   }
 }
+exports.getUserId = {
+  auth: {
+    mode:'required',
+    strategy:'session',
+  },
+  handler: function(request, reply){
+    user.findById(request.payload._id, function(err, users) {
+      if (err)
+        reply(err);
+      reply(users);
+    });
+  }
+}

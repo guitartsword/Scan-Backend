@@ -8,6 +8,7 @@ exports.endpoints = [{method: 'GET', path: '/', config: {handler: function(reque
 	{method: 'POST', path: '/v1/score', config: scoresController.createScore},
 	//usersController
 	{method: 'GET', path: '/v1/user/{username}', config: usersController.getUser},
+	{method: 'POST', path: '/v1/user', config: usersController.getUserId},
 	{method: 'POST', path: '/v1/register', config: usersController.createUser},
 	{method: 'GET', path: '/v1/users', config: usersController.getAllUsers},
 	{method: 'GET', path: '/v1/user/friends', config: usersController.listMyFriends},
