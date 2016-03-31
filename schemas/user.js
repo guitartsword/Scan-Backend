@@ -10,6 +10,7 @@ var UserSchema = new mongoose.Schema({
 	username : {type: String, unique: true, required: true},
 	password : {type: String, required:true},
 	scope : [String],
+	friends: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
 });
 
 UserSchema.plugin(uniqueValidator);
