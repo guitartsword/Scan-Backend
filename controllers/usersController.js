@@ -142,6 +142,7 @@ exports.getUserId = {
     strategy:'session',
   },
   handler: function(request, reply){
+    console.log("request: " + request.payload);
     user.findById(request.payload._id, function(err, users) {
       if (err)
         reply(err);
