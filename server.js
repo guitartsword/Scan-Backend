@@ -13,9 +13,8 @@ server.connection({
                 }
               }
 });
-
-mongoose.connect('mongodb://admin:admin@ds015899.mlab.com:15899/scan');
-//mongoose.connect('mongodb://localhost:27017/scan');
+//mongoose.connect('mongodb://admin:admin@ds015899.mlab.com:15899/scan');
+mongoose.connect('mongodb://localhost:27017/scan');
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error'));

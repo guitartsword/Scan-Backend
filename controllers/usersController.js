@@ -31,10 +31,10 @@ exports.createUser = {
 };
 
 exports.getAllUsers = {
-  auth: {
+/*  auth: {
     mode:'try',
     strategy:'session'
-  },
+  },*/
   handler: function(request, reply){
     console.log(user.find({}));
     reply(user.find({}));
@@ -120,5 +120,19 @@ exports.listMyFriends = {
     }
     reply(users.friends);
   });
+  }
+}
+
+exports.getUser = {
+  auth: {
+    mode:'required',
+    strategy:'session',
+  },
+  handler: function(request, reply){
+    user.find({username: request.params.username}, function(err, users) {
+      if (err)
+        reply(err);
+      reply(users);
+    });
   }
 }
