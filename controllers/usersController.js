@@ -31,6 +31,10 @@ exports.createUser = {
   }
 };
 exports.getAllUsers = {
+  auth: {
+    mode:'try',
+    strategy:'session'
+  },
   handler: function(request, reply){
     console.log(user.find({}));
     reply(user.find({}));
@@ -103,7 +107,7 @@ exports.deleteFriend ={
     });
   }
 }
-exports.listFriends = {
+exports.listMyFriends = {
   auth: {
     mode:'required',
     strategy:'session',
