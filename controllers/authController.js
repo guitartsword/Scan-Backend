@@ -19,7 +19,7 @@ exports.login = {
           if(!err){
             if(user.length > 0){
               request.auth.session.set(user[0]);
-              return reply({username: user[0].username, scope: user[0].scope});
+              return reply(user[0]);
             }
             return reply(boom.unauthorized('Wrong email or password'));
           }

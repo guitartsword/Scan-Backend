@@ -31,10 +31,10 @@ exports.createUser = {
 };
 
 exports.getAllUsers = {
-  auth: {
+/*  auth: {
     mode:'try',
     strategy:'session'
-  },
+  },*/
   handler: function(request, reply){
     console.log(user.find({}));
     reply(user.find({}));
@@ -127,10 +127,9 @@ exports.getUser = {
   auth: {
     mode:'required',
     strategy:'session',
-    scope: ['admin','regular']
   },
   handler: function(request, reply){
-    user.find({username: request.payload.username}, function(err, user){
+    user.find({username: request.params.username}, function(err, users) {
       if (err)
         reply(err);
       reply(users);
