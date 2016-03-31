@@ -122,3 +122,18 @@ exports.listMyFriends = {
   });
   }
 }
+
+exports.getUser = {
+  auth: {
+    mode:'required',
+    strategy:'session',
+    scope: ['admin','regular']
+  },
+  handler: function(request, reply){
+    user.find({username: request.payload.username}, function(err, user){
+      if (err)
+        reply(err);
+      reply(users);
+    });
+  }
+}
